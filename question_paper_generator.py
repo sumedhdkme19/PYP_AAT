@@ -5,6 +5,18 @@ import numpy as np
 
 from pandas.io.parsers import read_csv
 
+error_msg = '''
+\n\n
+Please check if you have done the following:
+1. Number students in correct and is an integer.
+2. Names of the files in the code are correct and are referenced to the correct file.
+3. Ensure that the files being read or written into are not being used by any other application while
+   this program is running.
+
+Please check for the above suggestions and try again.
+\n
+'''
+
 if(os.path.isdir("QP_Repository")):
     pass
 else:
@@ -35,25 +47,30 @@ def assign_question_papers(lst):
 if __name__ == '__main__' :
     qp_names = []
     assigned_order = []
-    nos = int(input("Enter the number of students enrolled for this course: "))
-    path = 'ATT_Sample_Question.xlsx'
-    lst = read_excel_file(path, 2, 6)
-    c = 1
-    p1, p2, p3, p4, p5, p6 = lst
-    for i in p1:
-        for j in p2:
-            for k in p3:
-                for l in p4:
-                    for o in p5:
-                        for p in p6:
-                            string = ' '.join([i, j, k, l, o, p])
-                            name = write_into(string, c)
-                            c += 1
-                            qp_names.append(name)
-
-    assigned_order = random.choices(qp_names, k = nos)
-    assign_question_papers(assigned_order)
-    print("SUCCESS!")
+    try:
+        nos = int(input("\nEnter the number of students enrolled for this course: "))
+        path = 'ATT_Sample_Question.xlsx'
+        lst = read_excel_file(path, 2, 6)
+        c = 1
+        p1, p2, p3, p4, p5, p6 = lst
+        for i in p1:
+            for j in p2:
+                for k in p3:
+                    for l in p4:
+                        for o in p5:
+                            for p in p6:
+                                string = ' '.join([i, j, k, l, o, p])
+                                name = write_into(string, c)
+                                c += 1
+                                qp_names.append(name)
+        assigned_order = random.choices(qp_names, k = nos)
+        assign_question_papers(assigned_order)
+    
+    except:
+        print(error_msg)
+       
+    else:
+        print("\n The program ran SUCCESSFULLY!\n")
 
     
     
